@@ -1,0 +1,58 @@
+##Group 2
+
+## Assessment
+    1) get questions - get -- pending redempta
+    2) save user quetion response - post -- pending -- cynthia
+    3) get user assessment result (caculate fertility score) - get -- me
+
+
+# Redempta
+1) create a new django app; call the app "habit"
+2) add app name to installed app
+3) create Habit and HabitLog models
+
+## Habit and Habit Tracker
+
+    #models
+        * Habit
+            - name - charfield
+
+        * HabitLog
+            - habit (one to many relationship) - ForeignKey
+            - user (one to many relationship) - ForeignKey
+            - value - charField
+            - date - DateField
+
+    #features
+        * get user average habit value - get
+        * log value for user habit - post
+
+
+## Habit plan and Schedule
+    #models
+        *Goal
+            - name - charField
+            - target - charField
+            - profile (one to many relationship) - ForeignKey
+            - deadline - DateTimeField
+            - completed - BooleanField (default False)
+        
+        *Plan
+            - name - charField
+            - description - TextField
+            - is_premium - BooleanField (default False)
+
+        *PlanSchedule
+            - plan (one to many relationship) - ForeignKey
+            - title - charField (week1, week2......)
+            - goals (many to many relationship to goals) - ManyToManyFields
+
+        *MyPlan
+            - plan (one to many relationship) - ForeignKey
+            - profile (one to many relationship) - ForeignKey
+            - date_started - DateField
+
+    # features
+        - mark goal as completed - post
+        - get user goals - get
+        * log value for user habit - post
