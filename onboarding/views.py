@@ -10,8 +10,8 @@ from django.db.models import Q
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import UserCreationForm
 
-from fertility_project.onboarding.models import Profile, Question, UserResponse
-from fertility_project.onboarding.serializers import QuestionSerializer
+from .models import Profile, Question, UserResponse
+from .serializers import QuestionSerializer
 
 
 @api_view(["post"])
