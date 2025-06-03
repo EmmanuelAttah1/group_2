@@ -46,3 +46,20 @@ class QuestionSerializer(serializers.ModelSerializer):
     "id" : 1
   },
 """
+
+class QuestionOptionsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = QuestionOption
+        fields = ["option_description","id"]
+
+
+class QuestionSerializer(serializers.ModelSerializer):
+    option = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Question
+        fields = ["description", "option", "id"]
+
+    def get_option(self, obj):
+        question_option = QuestionOption.objects.filter(question=obj)  # get all options for a question
+        return QuestionOptionsSerializer(question_option, many=True).data
