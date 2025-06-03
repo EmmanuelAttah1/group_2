@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'onboarding',
     'rest_framework',
     'rest_framework.authtoken',
+    'habit'
 ]
 
 MIDDLEWARE = [
