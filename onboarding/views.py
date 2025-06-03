@@ -90,6 +90,8 @@ class SubmitAnswerView(APIView):
     
 
 # redempta
+
+# Updated views.py
 class GetOnboardingQuestions(APIView):
   def get(self,request,format=None):
     """
