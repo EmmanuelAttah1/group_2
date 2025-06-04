@@ -7,4 +7,5 @@ urlpatterns = [
     path('login/', views.login,name='Login'),
     path('submit-answer/', views.SubmitAnswerView.as_view(), name='submit-answer'),
     path('api/onboarding-questions/', views.GetOnboardingQuestions.as_view(), name='get-onboarding-questions'),
+    path("user-info", views.UserInfo.as_view(), name="user_info")
 ]

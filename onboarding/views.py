@@ -94,6 +94,10 @@ class UserInfo(APIView):
     def get(self,request,format=None):
         user = request.user
         # return a response wih the user information
+        return Response({
+            "name":f"{user.first_name} {user.last_name}",
+            "email":user.email
+        },status=status.HTTP_200_OK)
         """
         {}
         first name, last name, email
