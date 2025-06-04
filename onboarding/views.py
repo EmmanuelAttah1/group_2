@@ -44,8 +44,7 @@ def login(request):
 class GetOnboardingQuestions(APIView):
     def get(self, request, format=None):
         questions = Question.objects.all()
-        serialized_questions = QuestionSerializer(questions, many=True)
-        return Response({'questions': serialized_questions.data}, status=status.HTTP_200_OK)
+        return Response({'questions': QuestionSerializer(questions, many=True).data}, status=status.HTTP_200_OK)
 
 class SubmitAnswerView(APIView):
     permission_classes = [IsAuthenticated] 

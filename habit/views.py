@@ -3,6 +3,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
+from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import IsAuthenticated
 
 from .serializers import HabitLogSerializer, HabitTargetSerializer
@@ -59,7 +60,8 @@ def get_user_average_habit_value(request, habit_id):
         return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
-class GetHabitLog(APIView):
+class GetHabitLog(GenericAPIView):
+    serializer_class = HabitLogSerializer
     def get(self,request,format=None):
         habit_id = request.query_params.get("habit") #user is sending habit value
         date = request.query_params.get("date") # user is sending date value
@@ -75,8 +77,9 @@ class GetHabitLog(APIView):
 
         return Response({'data':HabitLogSerializer(logs, many=True).data}, status=status.HTTP_200_OK)
     
-class GetHabitTarget(APIView):
+class GetHabitTarget(GenericAPIView):
     permission_classes = [IsAuthenticated]
+    serializer_class = HabitTargetSerializer
     def get(self,request,format=None):
         all_habit = HabitTarget.objects.filter(user=request.user)
         data = HabitTargetSerializer(all_habit, many=True).data
