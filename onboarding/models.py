@@ -17,6 +17,7 @@ class Question(models.Model):
 class QuestionOption(models.Model):
     option_description = models.CharField(max_length=255)
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='options')
+    score = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return f"{self.option_description} (for {self.question.description})"
@@ -28,3 +29,10 @@ class UserResponse(models.Model):
 
     def __str__(self):
         return f"{self.user.user.username}'s response to '{self.question.description}'"
+    
+class UserAssessmentResult(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    score = models.PositiveIntegerField()
+
+    def __str__(self):
+        return self.user.first_name

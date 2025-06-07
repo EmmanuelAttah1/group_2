@@ -39,7 +39,6 @@ class Goal(models.Model):
     goal = models.CharField(max_length=200)
     date = models.DateTimeField()
     option = models.CharField(max_length=30, choices=choices)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
     completed = models.BooleanField(default=False)
 
     def __str__(self):
@@ -64,6 +63,7 @@ class ScheduleSection(models.Model):
 class UserSchedule(models.Model):
     schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    completed_info = models.JSONField(default=dict)
     date_started = models.DateField
 
     def __str__(self):
