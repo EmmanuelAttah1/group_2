@@ -61,7 +61,9 @@ class RegisterView(APIView):
         if serializer.is_valid():
             user = serializer.save()
             token,_ = Token.objects.get_or_create(user=user)
-            return Response({'token': token.key}, status=status.HTTP_201_CREATED)
+            profile = Profile.objects.get(user=user)
+            
+            return Response({'token': token.key,"finished_onboarding":profile.assessment_result != 0}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 
@@ -91,7 +93,8 @@ def login(request):
     user = authenticate(username=username, password=password)
     if user:
         token,_ = Token.objects.get_or_create(user=user)
-        return Response({'token': token.key})
+        profile = Profile.objects.get(user=user)
+        return Response({'token': token.key,"finished_onboarding":profile.assessment_result != 0})
     return Response({'error': 'Invalid credentials'}, status=401)
 
 
