@@ -223,12 +223,42 @@ class SubmitAnswerView(APIView):
         )
     }
 )
+
+
 class UserInfo(APIView):
     permission_classes = [IsAuthenticated]
+    def get_profile(self,request):
+        try:
+            profile = Profile.objects.get(user=request.user)
+            return profile
+        except Profile.DoesNotExist:
+            return None
+        
     def get(self,request,format=None):
+        profile = self.get_profile(request)
+
+        if profile is None:
+            return Response(status=401)
+        
         user = request.user
         # return a response wih the user information
         return Response({
-            "name":f"{user.first_name} {user.last_name}",
-            "email":user.email
+            "first_name":user.first_name,
+            "last_name":user.last_name,
+            "email":user.email,
+            "assessment":profile.assessment_result
         },status=status.HTTP_200_OK)
+    
+    def post(self,request,format=None):
+        profile = self.get_profile(request)
+
+        if profile is None:
+            return Response(status=401)
+        
+        data = request.POST
+        result = int(data['result'])
+
+        profile.assessment_result = result
+        profile.save()
+
+        return Response({"msg":"saved"},status=200)

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Question, QuestionOption
+from .models import Profile, Question, QuestionOption
 from django.contrib.auth.models import User
 
 # JSON -  Javascript Object Notation
@@ -37,6 +37,11 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         )
         user.set_password(validated_data['password'])
         user.save()
+
+        # create user profile
+        profile = Profile(user=user)
+        profile.save()
+        
         return user
 
 class QuestionOptionsSerializer(serializers.ModelSerializer):
